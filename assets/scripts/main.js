@@ -26,7 +26,9 @@ function getRecipesFromStorage() {
 	// A9. TODO - Complete the functionality as described in this function
 	//           header. It is possible in only a single line, but should
 	//           be no more than a few lines.
-	return JSON.parse(localStorage.getItem('recipes'));
+	const recipes = localStorage.getItem('recipes');
+	if(recipes == null || recipes.length ==0) return [];
+	return JSON.parse(recipes);
 }
 
 /**
@@ -43,6 +45,7 @@ function addRecipesToDocument(recipes) {
 	//            create a <recipe-card> element for each one, and populate
 	//            each <recipe-card> with that recipe data using element.data = ...
 	//            Append each element to <main>
+	if(recipes == undefined || recipes.length == 0) return;
 	for( const recipe of recipes ) {
 		let recipeEl = document.createElement('recipe-card');
 		recipeEl.data = recipe;
@@ -103,11 +106,10 @@ function initFormHandler() {
 	// B12. TODO - Clear the local storage
 	// B13. TODO - Delete the contents of <main>
 	clearButton.addEventListener('click', () => {
-		
+		localStorage.clear();
 		let recipesToRemove = document.querySelectorAll('main recipe-card');
 		for(let i = 0; i < recipesToRemove.length; i++) {
 			recipesToRemove[i].remove();
 		}
-		localStorage.clear();
 	});
 }
